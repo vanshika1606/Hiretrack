@@ -4,6 +4,17 @@ import KanbanBoard from './components/KanbanBoard'
 import AddJobModal from './components/AddJobModal'
 import StatsBar from './components/StatsBar'
 import AIMatch from './components/AIMatch'
+import Analytics from './components/Analytics'
+import Tools from './components/Tools'
+
+const particles = [...Array(50)].map((_, i) => ({
+  id: i,
+  left: `${Math.floor(Math.random() * 100)}%`,
+  top: `${Math.floor(Math.random() * 100)}%`,
+  duration: `${2 + Math.floor(Math.random() * 4)}s`,
+  delay: `${Math.floor(Math.random() * 4)}s`,
+  opacity: Math.random() * 0.3
+}))
 
 function App() {
   const [jobs, setJobs] = useState(() => {
@@ -34,15 +45,23 @@ function App() {
 
   return (
     <div className="min-h-screen text-white relative overflow-x-hidden" style={{background: 'linear-gradient(135deg, #060608 0%, #0a0a12 50%, #08080f 100%)'}}>
-      <div className="fixed top-[-200px] left-[-200px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{background: 'radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%)'}} />
-      <div className="fixed bottom-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)'}} />
+      {particles.map(p => (
+        <div key={p.id} className="particle" style={{left: p.left, top: p.top, '--duration': p.duration, '--delay': p.delay, opacity: p.opacity}} />
+      ))}
+      <div className="orb1 fixed top-[-200px] left-[-200px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)'}} />
+      <div className="orb2 fixed bottom-[-200px] right-[-200px] w-[600px] h-[600px] rounded-full pointer-events-none" style={{background: 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)'}} />
+      <div className="orb3 fixed top-[40%] left-[40%] w-[400px] h-[400px] rounded-full pointer-events-none" style={{background: 'radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%)'}} />
 
       <Navbar onAddClick={() => setShowModal(true)} activeTab={activeTab} setActiveTab={setActiveTab} />
-      <StatsBar jobs={jobs} onSearch={setSearch} />
 
       {activeTab === 'board' && (
-        <KanbanBoard jobs={filteredJobs} onDelete={handleDelete} onStatusChange={handleStatusChange} onNotesChange={handleNotesChange} />
+        <>
+          <StatsBar jobs={jobs} onSearch={setSearch} />
+          <KanbanBoard jobs={filteredJobs} onDelete={handleDelete} onStatusChange={handleStatusChange} onNotesChange={handleNotesChange} />
+        </>
       )}
+      {activeTab === 'analytics' && <Analytics jobs={jobs} />}
+      {activeTab === 'tools' && <Tools apiKey={import.meta.env.VITE_GEMINI_API_KEY} />}
       {activeTab === 'ai' && <AIMatch />}
 
       {showModal && (

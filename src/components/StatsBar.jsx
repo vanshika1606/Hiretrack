@@ -20,14 +20,11 @@ function StatsBar({ jobs, onSearch }) {
           <div key={stat.label}
             className="rounded-2xl p-4 text-center relative overflow-hidden group hover:scale-105 transition-all cursor-default"
             style={{background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)'}}>
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all" style={{background: `radial-gradient(circle at center, ${stat.glow.replace('0.3', '0.06')}, transparent 70%)`}} />
             <p className="text-3xl font-black relative z-10" style={{color: stat.color, textShadow: `0 0 20px ${stat.glow}`}}>{stat.value}</p>
             <p className="text-xs mt-1 font-medium relative z-10" style={{color: 'rgba(255,255,255,0.35)'}}>{stat.label}</p>
           </div>
         ))}
       </div>
-
-      {/* Search bar */}
       <div className="relative">
         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm">🔍</span>
         <input
