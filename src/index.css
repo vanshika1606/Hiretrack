@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  cursor: none;
+}
+
+body {
+  background: #0a0a0f;
+  min-height: 100vh;
+}
+
+#cursor {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, rgba(99,102,241,0.8), rgba(139,92,246,0.3));
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s;
+  mix-blend-mode: screen;
+}
+
+#cursor-glow {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(99,102,241,0.06), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+}
